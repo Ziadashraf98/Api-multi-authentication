@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::group(['prefix'=>'category' , 'middleware'=>['auth:admin-api' , 'checkLang']] , function () {
+Route::group(['prefix'=>'category'] , function () {
     Route::controller(CategoryController::class)->group(function() {
 
     Route::post('/all_categories' , 'index');
@@ -31,5 +31,19 @@ Route::group(['prefix'=>'category' , 'middleware'=>['auth:admin-api' , 'checkLan
 });
 });
 
-Route::post('UserLogin' , [UserController::class , 'login']);
-Route::post('AdminLogin' , [AdminController::class , 'login']);
+Route::group(['prefix'=>'admin'] , function () {
+    Route::controller(AdminController::class)->group(function() {
+
+    Route::post('login' , 'login');
+    Route::get('/details', 'getDetails');
+    Route::post('/logout', 'logout');
+});
+});
+
+Route::group(['prefix'=>'user'] , function () {
+    Route::controller(UserController::class)->group(function() {
+
+    Route::post('login' , 'login');
+    Route::post('/logout', 'logout');
+});
+});

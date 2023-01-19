@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['checkLang' , 'auth:user-api,admin-api'])->except('store');
+        $this->middleware('auth:admin-api')->only('store');
+    }
+
     public function index()
     {
         $categories = Category::select('id' , 'name_' . app()->getLocale() . ' as name')->get();

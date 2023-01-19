@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+       $this->middleware('auth:user-api')->except('login'); 
+    }
+
     public function login(Request $request)
     {
         if (!Auth::attempt(['email'=>$request->email , 'password'=>$request->password]))
@@ -20,5 +25,12 @@ class UserController extends Controller
         $token = $user->createToken('my-app-token')->plainTextToken;
         $response = ['user'=>$user , 'token'=>$token , 'code'=>200];
         return response(['success'=>true , 'data'=>$response]);
+    }
+
+    public function logout()
+    {
+        $user = Auth::user();
+        Auth::user()->tokens()->delete();
+        return response()->json(['success'=>'User Exited' , 'user'=>$user]);
     }
 }
