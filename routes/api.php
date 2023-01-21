@@ -35,8 +35,8 @@ Route::group(['prefix'=>'admin'] , function () {
     Route::controller(AdminController::class)->group(function() {
 
     Route::post('login' , 'login');
-    Route::get('/details', 'getDetails');
-    Route::post('/logout', 'logout');
+    Route::get('/profile', 'profile');
+    Route::get('/logout', 'logout');
 });
 });
 
@@ -44,6 +44,7 @@ Route::group(['prefix'=>'user'] , function () {
     Route::controller(UserController::class)->group(function() {
 
     Route::post('login' , 'login');
-    Route::post('/logout', 'logout');
+    Route::get('/profile', 'profile');
+    Route::get('/logout', 'logout');
 });
 });

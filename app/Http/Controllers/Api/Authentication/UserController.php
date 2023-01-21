@@ -27,10 +27,16 @@ class UserController extends Controller
         return response(['success'=>true , 'data'=>$response]);
     }
 
+    public function profile()
+    {
+        $user = Auth::user();
+        return response()->json(['success'=>true , 'user'=>$user]);
+    }
+
     public function logout()
     {
         $user = Auth::user();
         Auth::user()->tokens()->delete();
-        return response()->json(['success'=>'User Exited' , 'user'=>$user]);
+        return response()->json(['success'=>'User Successfully Signed Out' , 'user'=>$user]);
     }
 }

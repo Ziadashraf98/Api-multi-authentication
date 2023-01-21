@@ -27,16 +27,16 @@ class AdminController extends Controller
         return response(['success'=>true , 'data'=>$response]);
     }
 
-    public function getDetails()
+    public function profile()
     {
-        $admin = Auth::guard('admin-api')->user();
-        return response()->json(['success'=>true , 'data'=>$admin]);
+        $admin = Auth::user();
+        return response()->json(['success'=>true , 'admin'=>$admin]);
     }
 
     public function logout()
     {
         $admin = Auth::user();
         Auth::user()->tokens()->delete();
-        return response()->json(['success'=>'Admin Exited' , 'admin'=>$admin]);
+        return response()->json(['success'=>'Admin Successfully Signed Out' , 'admin'=>$admin]);
     }
 }
